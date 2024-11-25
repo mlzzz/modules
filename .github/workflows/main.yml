@@ -1,0 +1,55 @@
+name: caifen
+
+on:
+  push:
+    paths:
+      - 'caifen/拆分表.txt'          # 指定文件：仅当推送此文件时触发
+
+jobs:
+  handle-specific-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download modules
+        uses: actions/checkout@v4
+
+      - name: Download scripts
+        uses: actions/checkout@v4
+        with:
+          repository: mlzzz/scripts
+          path: 092scripts
+          token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认 GITHUB_TOKEN，访问同账号私有仓库
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: build caifen
+        shell: bash
+        run: |
+          cp caifen/拆分表.txt 092scripts/
+          cd 092scripts
+          python3 ./黑体GB拆分制作/黑体串连脚本.py
+          cd ..
+
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+        with:
+          repository: mlzzz/test  # 指定目标公开仓库
+          ref: main             # 指定目标分支
+          path: test              # 检出到 `public-repo` 子目录
+
+      - name: Copy generated file
+        run: |
+          cp 092scripts/wb_spelling.dict.yaml test/   # 替换为生成的文件名
+          cd test
+          git add wb_spelling.dict.yaml
+
+      - name: Commit and Push
+        run: |
+          cd test
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "同步宋天拆分"
+          git push origin main
