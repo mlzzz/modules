@@ -35,6 +35,7 @@ jobs:
           cd 092scripts
           python3 ./黑体GB拆分制作/黑体串连脚本.py
           cd ..
+          ls
 
       - name: Checkout public repository
         uses: actions/checkout@v4
@@ -49,9 +50,11 @@ jobs:
           cd test
           git add wb_spelling.dict.yaml
           pwd
+          ls
 
       - name: Commit files
         run: |
+          ls
           pwd
           git config --local user.email "test@test.com"
           git config --local user.name "mlzzz"
