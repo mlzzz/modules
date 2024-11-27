@@ -49,18 +49,15 @@ jobs:
           cd test
           git add wb_spelling.dict.yaml
 
-    # 配置 Git 用户信息
-      - name: Configure Git user
+      - name: commit
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-      # 提交并推送更改到目标仓库
-      - name: Commit and Push Changes
-        run: |
-          cd test
+          git config --global user.email 150@qq.com
+          git config --global user.name mlzzz
           git add .
-          git remote set-url origin https://x-access-token:${{ secrets.MLZZZTOKEN }}@github.com/mlzzz/test.git
-          git commit -m "同步宋天拆分"
-          git push
+          git commit -m "同步宋天" -a
+        
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
