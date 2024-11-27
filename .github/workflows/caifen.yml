@@ -20,7 +20,8 @@ jobs:
           repository: mlzzz/scripts
           ref: main  # 显式指定分支
           path: 092scripts
-          token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认 GITHUB_TOKEN，访问同账号私有仓库
+#          token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认 GITHUB_TOKEN，访问同账号私有仓库
+          token: ${{ secrets.MLZZZTOKEN }}  # 使用 GitHub 仓库中的 MLZZZTOKEN secret
 
       - name: Set up Python
         uses: actions/setup-python@v4
