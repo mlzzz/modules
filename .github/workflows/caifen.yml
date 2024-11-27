@@ -43,6 +43,7 @@ jobs:
           repository: mlzzz/test  # 指定目标公开仓库
           ref: main             # 指定目标分支
           path: test              # 检出到 `public-repo` 子目录
+          token: ${{ secrets.MLZZZTOKEN }}  # 使用 GitHub 仓库中的 MLZZZTOKEN secret
 
       - name: Copy generated file
         run: |
@@ -59,6 +60,7 @@ jobs:
           git config --local user.email "test@test.com"
           git config --local user.name "mlzzz"
           git commit -m "同步宋天拆分"
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
