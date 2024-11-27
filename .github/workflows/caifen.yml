@@ -63,7 +63,7 @@ jobs:
 
       - name: Push changes
         run: |
-          cd test
+          cd test  # 这里是主要点，一定要切换到仓库目录
           git remote set-url origin https://${{ secrets.MLZZZTOKEN }}@github.com/mlzzz/test.git
           git push origin main --force
 
