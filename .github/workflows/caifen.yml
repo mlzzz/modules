@@ -49,15 +49,15 @@ jobs:
           cd test
           git add wb_spelling.dict.yaml
 
-      - name: commit
+      - name: Commit files
         run: |
-          git config --global user.email 150@qq.com
-          git config --global user.name mlzzz
-          git add .
-          git commit -m "同步宋天" -a
-        
+          git config --local user.email "test@test.com"
+          git config --local user.name "mlzzz"
+          git commit -a -m "同步宋天拆分"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: mlzzz/test
+          force: true
 
