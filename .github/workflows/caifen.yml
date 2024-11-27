@@ -62,9 +62,14 @@ jobs:
           git commit -m "同步宋天拆分"
 
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.MLZZZTOKEN }}
-          repository: mlzzz/modules
-          force: true
+        run: |
+          cd test
+          git remote set-url origin https://${{ secrets.MLZZZTOKEN }}@github.com/mlzzz/test.git
+          git push origin main --force
+
+#        uses: ad-m/github-push-action@master
+#        with:
+#          github_token: ${{ secrets.MLZZZTOKEN }}
+#          repository: mlzzz/test
+#          force: true
 
