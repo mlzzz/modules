@@ -47,8 +47,6 @@ jobs:
       - name: Copy generated file
         run: |
           cp 092scripts/wb_spelling.dict.yaml test/   # 替换为生成的文件名
-          cd test
-          git add wb_spelling.dict.yaml
           pwd
           ls
 
@@ -56,6 +54,8 @@ jobs:
         run: |
           ls
           pwd
+          cd test/
+          git add wb_spelling.dict.yaml
           git config --local user.email "test@test.com"
           git config --local user.name "mlzzz"
           git commit -m "同步宋天拆分"
