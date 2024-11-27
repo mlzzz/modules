@@ -48,13 +48,14 @@ jobs:
           cp 092scripts/wb_spelling.dict.yaml test/   # 替换为生成的文件名
           cd test
           git add wb_spelling.dict.yaml
+          pwd
 
       - name: Commit files
         run: |
+          pwd
           git config --local user.email "test@test.com"
           git config --local user.name "mlzzz"
-          git add .
-          git commit -a -m "同步宋天拆分"
+          git commit -m "同步宋天拆分"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
