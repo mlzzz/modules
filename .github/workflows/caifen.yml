@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'caifen/拆分表.txt'          # 指定文件：仅当推送此文件时触发
+  workflow_dispatch:  # 添加手动触发器
 
 jobs:
   handle-specific-files:
