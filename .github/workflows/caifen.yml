@@ -48,16 +48,15 @@ jobs:
           cp 092scripts/wb_spelling.dict.yaml test/   # 替换为生成的文件名
           cd test
           git add wb_spelling.dict.yaml
+
       - name: Commit and Push
         env:
-          ACCESS_TOKEN: ${{ secrets.MLZZZTOKEN }}
+          MLZZZTOKEN: ${{ secrets.MLZZZTOKEN }}
         run: |
           cd test
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add wb_spelling.dict.yaml
-          git diff --cached --exit-code || git commit -m "同步宋天拆分"
-          git remote set-url origin https://x-access-token:${ACCESS_TOKEN}@github.com/mlzzz/test.git
+          git commit -m "同步宋天拆分"
           git push origin main
 
 
