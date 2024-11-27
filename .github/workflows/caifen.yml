@@ -49,19 +49,13 @@ jobs:
           cd test
           git add wb_spelling.dict.yaml
 
-      - name: Commit and Push to another repository
-        env:
-          MLZZZTOKEN: ${{ secrets.MLZZZTOKEN }}  # 使用 GitHub Secrets 中的 MLZZZTOKEN
+      # 提交并推送更改到目标仓库
+      - name: Commit and Push Changes
         run: |
           cd test
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          # 添加文件到 git 索引
-          git add wb_spelling.dict.yaml
-          # 提交文件
+          git add .
           git commit -m "同步宋天拆分"
-          # 修改远程 URL，使用 MLZZZTOKEN 进行身份验证
-          git remote set-url origin https://x-access-token:${MLZZZTOKEN}@github.com/mlzzz/test.git
-          # 推送更改到目标仓库的 main 分支
-          git push origin main
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
