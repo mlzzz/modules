@@ -53,6 +53,7 @@ jobs:
         run: |
           git config --local user.email "test@test.com"
           git config --local user.name "mlzzz"
+          git add .
           git commit -a -m "同步宋天拆分"
       - name: Push changes
         uses: ad-m/github-push-action@master
