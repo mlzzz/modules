@@ -3,8 +3,8 @@ name: caifen
 on:
   push:
     paths:
-      - 'caifen/拆分表.txt'          # 指定文件：仅当推送此文件时触发
-  workflow_dispatch:  # 添加手动触发器
+      - 'caifen/拆分表.txt'    # 指定文件：仅当推送此文件时触发
+  workflow_dispatch:           # 添加手动触发器
 
 jobs:
   handle-specific-files:
@@ -18,10 +18,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: mlzzz/scripts
-          ref: main  # 显式指定分支
+          ref: main
           path: 092scripts
-#          token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认 GITHUB_TOKEN，访问同账号私有仓库
-          token: ${{ secrets.MLZZZTOKEN }}  # 使用 GitHub 仓库中的 MLZZZTOKEN secret
+          token: ${{ secrets.MLZZZTOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -35,41 +34,29 @@ jobs:
           cd 092scripts
           python3 ./黑体GB拆分制作/黑体串连脚本.py
           cd ..
-          ls
 
       - name: Checkout public repository
         uses: actions/checkout@v4
         with:
-          repository: mlzzz/test  # 指定目标公开仓库
-          ref: main             # 指定目标分支
-          path: test              # 检出到 `public-repo` 子目录
-          token: ${{ secrets.MLZZZTOKEN }}  # 使用 GitHub 仓库中的 MLZZZTOKEN secret
+          repository: mlzzz/092wb
+          ref: private
+          path: 092wb
+          token: ${{ secrets.MLZZZTOKEN }}
 
       - name: Copy generated file
         run: |
-          cp 092scripts/wb_spelling.dict.yaml test/   # 替换为生成的文件名
-          pwd
-          ls
+          cp 092scripts/wb_spelling.dict.yaml 092wb/
 
       - name: Commit files
         run: |
-          ls
-          pwd
-          cd test/
+          cd 092wb/
           git add wb_spelling.dict.yaml
-          git config --local user.email "test@test.com"
+          git config --local user.email "092wb@163.com"
           git config --local user.name "mlzzz"
           git commit -m "同步宋天拆分"
 
       - name: Push changes
         run: |
-          cd test  # 这里是主要点，一定要切换到仓库目录
-          git remote set-url origin https://${{ secrets.MLZZZTOKEN }}@github.com/mlzzz/test.git
-          git push origin main --force
-
-#        uses: ad-m/github-push-action@master
-#        with:
-#          github_token: ${{ secrets.MLZZZTOKEN }}
-#          repository: mlzzz/test
-#          force: true
-
+          cd 092wb
+          git remote set-url origin https://${{ secrets.MLZZZTOKEN }}@github.com/mlzzz/092wb.git
+          git push origin private
